@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #ebeaeb;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+  <children>
+    <Text layoutX="166.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign" textAlignment="CENTER" wrappingWidth="467.109375">
+      <font>
+        <Font name="Pacifico Regular" size="80.0" />
+      </font>
+    </Text>
+    <Text layoutX="276.0" layoutY="438.0" strokeType="OUTSIDE" strokeWidth="0.0" text="회원이신가요?">
+      <font>
+        <Font size="25.0" />
+      </font>
+    </Text>
+    <Button fx:id="gotoLogin" layoutX="427.0" layoutY="407.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="로그인" textAlignment="CENTER" underline="true">
+      <font>
+        <Font size="23.0" />
+      </font>
+    </Button>
+    <TextField fx:id="id" layoutX="149.0" layoutY="196.0" prefHeight="60.0" prefWidth="530.0" promptText="아이디" style="-fx-background-radius: 20; -fx-border: none;">
+      <font>
+        <Font name="Jalnan 2 TTF" size="26.0" />
+      </font>
+    </TextField>
+    <TextField fx:id="passwd" layoutX="149.0" layoutY="270.0" prefHeight="60.0" prefWidth="530.0" promptText="비밀번호" style="-fx-background-radius: 20; -fx-boder: none;">
+      <font>
+        <Font name="Jalnan 2 TTF" size="26.0" />
+      </font>
+    </TextField>
+    <Button fx:id="enter" layoutX="327.0" layoutY="459.0" minHeight="60.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="174.0" style="-fx-background-radius: 20; -fx-background-color: #000;" text="enter" textAlignment="CENTER" textFill="WHITE">
+      <font>
+        <Font name="Pacifico Regular" size="30.0" />
+      </font>
+      <padding>
+        <Insets bottom="5.0" />
+      </padding>
+    </Button>
+    <TextField fx:id="repasswd" layoutX="149.0" layoutY="347.0" prefHeight="60.0" prefWidth="530.0" promptText="비밀번호 확인" style="-fx-background-radius: 20; -fx-boder: none;">
+      <font>
+        <Font name="Jalnan 2 TTF" size="26.0" />
+      </font>
+    </TextField>
+    <ImageView fitHeight="130.0" fitWidth="130.0" layoutX="670.0" layoutY="481.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+        <Image url="file:C:/work/java_projects/img/catfoot.png" />
+      </image>
+    </ImageView>
+  </children>
+</AnchorPane>

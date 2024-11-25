@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:controller="com.example.todo.AllPlanController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #ebeaeb;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+  <children>
+    <Button fx:id="gotoToday" layoutX="14.0" layoutY="50.0" mnemonicParsing="false" style="-fx-background-color: transparent;">
+      <font>
+        <Font name="Jalnan 2 TTF" size="20.0" />
+      </font>
+    </Button>
+    <Text layoutX="27.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="all plan">
+      <font>
+        <Font name="Pacifico Regular" size="60.0" />
+      </font>
+    </Text>
+    <Button fx:id="plus" layoutX="642.0" layoutY="516.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="143.0" style="-fx-background-radius: 20; -fx-background-color: black;" text="plus" textFill="WHITE">
+      <font>
+        <Font name="D2Coding Bold" size="30.0" />
+      </font>
+    </Button>
+    <Button fx:id="Back" layoutY="570.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text=" ← Back" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="5.0">
+    <font>
+        <Font name="Jalnan 2 TTF" size="26.0" />
+      </font>
+      <padding>
+        <Insets left="1.0" />
+      </padding>
+    </Button>
+    <ListView fx:id="planListView" layoutX="21.0" layoutY="150.0" prefHeight="349.0" prefWidth="761.0" />
+  </children>
+</AnchorPane>

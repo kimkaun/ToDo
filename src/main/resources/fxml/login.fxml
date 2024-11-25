@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #ebeaeb;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+  <children>
+    <Text layoutX="166.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login" textAlignment="CENTER" wrappingWidth="467.109375">
+      <font>
+        <Font name="Pacifico Regular" size="80.0" />
+      </font>
+    </Text>
+    <Text layoutX="215.0" layoutY="405.0" strokeType="OUTSIDE" strokeWidth="0.0" text="아직 회원이 아니신가요?">
+      <font>
+        <Font size="25.0" />
+      </font>
+    </Text>
+    <Button fx:id="gotoSign" layoutX="478.0" layoutY="375.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="회원가입" textAlignment="CENTER" underline="true">
+      <font>
+        <Font size="23.0" />
+      </font>
+    </Button>
+    <TextField fx:id="id" layoutX="150.0" layoutY="231.0" prefHeight="60.0" prefWidth="530.0" promptText="아이디" style="-fx-background-radius: 20; -fx-border: none;">
+      <font>
+        <Font name="Jalnan 2 TTF" size="26.0" />
+      </font>
+    </TextField>
+    <Button fx:id="loginButton" layoutX="327.0" layoutY="435.0" minHeight="60.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="174.0" style="-fx-background-radius: 20; -fx-background-color: #000;" text="enter" textAlignment="CENTER" textFill="WHITE">
+      <font>
+        <Font name="Pacifico Regular" size="30.0" />
+      </font>
+      <padding>
+        <Insets bottom="5.0" />
+      </padding>
+    </Button>
+    <ImageView fitHeight="130.0" fitWidth="130.0" layoutX="680.0" layoutY="480.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+        <Image url="file:C:/work/java_projects/img/catfoot.png" />
+      </image>
+    </ImageView>
+    <PasswordField fx:id="passwd" layoutX="150.0" layoutY="307.0" prefHeight="60.0" prefWidth="530.0" promptText="비밀번호" style="-fx-background-radius: 20;">
+      <font>
+        <Font name="Jalnan 2 TTF" size="26.0" />
+      </font>
+    </PasswordField>
+  </children>
+</AnchorPane>
