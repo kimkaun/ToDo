@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:controller="com.example.todo.PlanPlusController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #ebeaeb;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #ebeaeb;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
   <children>
     <Text layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Plan plus" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="0.0">
       <font>
@@ -30,7 +30,7 @@
         <Font name="Jalnan 2 TTF" size="23.0" />
       </font>
     </TextField>
-    <Button fx:id="enterButton" onAction="#onEnterButtonClicked" layoutX="581.0" layoutY="484.0" minHeight="60.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="143.0" style="-fx-background-radius: 20; -fx-background-color: #000;" text="enter" textAlignment="CENTER" textFill="WHITE">
+    <Button fx:id="enterButton" layoutX="581.0" layoutY="484.0" minHeight="60.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="143.0" style="-fx-background-radius: 20; -fx-background-color: #000;" text="enter" textAlignment="CENTER" textFill="WHITE">
       <font>
         <Font name="Pacifico Regular" size="30.0" />
       </font>
