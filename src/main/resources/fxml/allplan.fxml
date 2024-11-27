@@ -19,7 +19,7 @@
         <Font name="Pacifico Regular" size="60.0" />
       </font>
     </Text>
-    <Button fx:id="plus" layoutX="642.0" layoutY="516.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="143.0" style="-fx-background-radius: 20; -fx-background-color: black;" text="plus" textFill="WHITE">
+    <Button fx:id="plusButton" layoutX="642.0" layoutY="516.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="143.0" style="-fx-background-radius: 20; -fx-background-color: black;" text="plus" textFill="WHITE">
       <font>
         <Font name="D2Coding Bold" size="30.0" />
       </font>

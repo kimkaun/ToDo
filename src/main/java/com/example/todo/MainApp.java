@@ -195,7 +195,6 @@ public class MainApp extends Application {
     }
   }
 
-  // 계획 추가 화면으로 전환
   private void showPlanWindow(Stage currentStage) {
     try {
       FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/planplus.fxml"));
@@ -231,7 +230,7 @@ public class MainApp extends Application {
         } else {
           // 계획 추가
           plans.add("제목: " + title + "\n내용: " + content + "\n날짜: " + date);
-          showAllPlanWindow(currentStage);
+          showAllPlanWindow(currentStage);  // 계획 추가 후 allplan 화면으로 이동
         }
       });
     } catch (Exception e) {
@@ -239,7 +238,7 @@ public class MainApp extends Application {
     }
   }
 
-  // 모든 계획 보기 화면으로 전환
+
   private void showAllPlanWindow(Stage currentStage) {
     try {
       FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/allplan.fxml"));
@@ -247,10 +246,20 @@ public class MainApp extends Application {
       currentStage.setScene(new Scene(allPlanRoot, 800, 600));
 
       ListView<String> planListView = (ListView<String>) allPlanRoot.lookup("#planListView");
+      Button plusButton = (Button) allPlanRoot.lookup("#plusButton");  // plusButton 가져오기
 
       // ListView에 계획 데이터 표시
       planListView.getItems().clear();
       planListView.getItems().addAll(plans);
+
+      // plusButton 클릭 시 planplus 화면으로 이동
+      plusButton.setOnAction(event -> {
+        try {
+          showPlanWindow(currentStage);  // planplus 화면으로 이동
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+      });
 
       Button back = (Button) allPlanRoot.lookup("#Back");
       back.setOnAction(event -> {
@@ -264,6 +273,7 @@ public class MainApp extends Application {
       e.printStackTrace();  // 예외 처리
     }
   }
+
 
   public static void main(String[] args) {
     launch(args);
