@@ -229,7 +229,7 @@ public class MainApp extends Application {
           alert.showAndWait();
         } else {
           // 계획 추가
-          plans.add("제목: " + title + "\n내용: " + content + "\n날짜: " + date);
+          plans.add("제목 : " + title + "\n내용 : " + content + "\n날짜 : " + date);
           showAllPlanWindow(currentStage);  // 계획 추가 후 allplan 화면으로 이동
         }
       });
@@ -252,6 +252,22 @@ public class MainApp extends Application {
       planListView.getItems().clear();
       planListView.getItems().addAll(plans);
 
+      // ListView 아이템의 폰트 설정
+      planListView.setCellFactory(param -> {
+        return new javafx.scene.control.ListCell<String>() {
+          @Override
+          protected void updateItem(String item, boolean empty) {
+            super.updateItem(item, empty);
+            if (item != null) {
+              setText(item);
+              setFont(Font.font("Jalnan 2 TTF", 14)); // 폰트 및 크기 설정
+            } else {
+              setText(null);
+            }
+          }
+        };
+      });
+
       // plusButton 클릭 시 planplus 화면으로 이동
       plusButton.setOnAction(event -> {
         try {
@@ -273,6 +289,7 @@ public class MainApp extends Application {
       e.printStackTrace();  // 예외 처리
     }
   }
+
 
 
   public static void main(String[] args) {
