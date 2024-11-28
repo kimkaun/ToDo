@@ -5,9 +5,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DBconnection {
-
   // 데이터베이스 연결 메서드
   public static Connection getConnection() {
     Connection conn = null;
@@ -52,15 +53,55 @@ public class DBconnection {
     }
   }
 
-  // 회원 인증 메서드
-  public static boolean validateUser(String username, String password) {
-    String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
+  // 계획 저장 메서드
+  public static boolean insertPlan(int userId, String title, String content, String date) {
+    String query = "INSERT INTO plans (user_id, title, content, date) VALUES (?, ?, ?, ?)";
 
+    try (Connection conn = getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+      pstmt.setInt(1, userId);
+      pstmt.setString(2, title);
+      pstmt.setString(3, content);
+      pstmt.setString(4, date);
+
+      int result = pstmt.executeUpdate();
+      return result > 0;
+    } catch (SQLException e) {
+      System.out.println("계획 추가 중 오류 발생: " + e.getMessage());
+      return false;
+    }
+  }
+
+  // 사용자별 계획 조회 메서드
+  public static List<String> getPlansByUserId(int userId) {
+    String query = "SELECT title, content, date FROM plans WHERE user_id = ?";
+    List<String> plans = new ArrayList<>();
+
+    try (Connection conn = getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+      pstmt.setInt(1, userId);
+      ResultSet rs = pstmt.executeQuery();
+
+      while (rs.next()) {
+        String title = rs.getString("title");
+        String content = rs.getString("content");
+        String date = rs.getString("date");
+        plans.add("제목: " + title + "\n내용: " + content + "\n날짜: " + date);
+      }
+    } catch (SQLException e) {
+      System.out.println("계획 조회 중 오류 발생: " + e.getMessage());
+    }
+    return plans;
+  }
+  public static boolean validateUserExistence(String username, String password) {
+    String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
     try (Connection conn = getConnection();
          PreparedStatement stmt = conn.prepareStatement(sql)) {
 
       stmt.setString(1, username);
-      stmt.setString(2, password); // 비밀번호를 해시로 비교해야 할 경우 적절히 수정 필요
+      stmt.setString(2, password);
 
       ResultSet rs = stmt.executeQuery();
       return rs.next(); // 사용자가 존재하면 true 반환
@@ -69,4 +110,24 @@ public class DBconnection {
       return false;
     }
   }
-}
+
+  public static int validateUser(String username, String password) {
+    String sql = "SELECT user_id FROM users WHERE username = ? AND password = ?";
+    try (Connection conn = getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+      stmt.setString(1, username);
+      stmt.setString(2, password);
+
+      ResultSet rs = stmt.executeQuery();
+      if (rs.next()) {
+        return rs.getInt("user_id"); // 로그인 성공 시 user_id 반환
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return -1; // 로그인 실패 시 -1 반환
+  }
+
+
+} // DBconnetion class

@@ -51,7 +51,7 @@ public class MainApp extends Application {
         e.printStackTrace();
       }
     });
-  }
+  } // start
 
   // 로그인 창 전환
   private void showLoginWindow(Stage currentStage) {
@@ -69,20 +69,19 @@ public class MainApp extends Application {
         String username = usernameField.getText().trim();
         String password = passwordField.getText().trim();
 
-        // 유효성 검사
         if (username.isEmpty() || password.isEmpty()) {
           Alert warningAlert = new Alert(Alert.AlertType.WARNING);
           warningAlert.setTitle("경고");
           warningAlert.setContentText("사용자 이름 또는 비밀번호를 입력하세요.");
           warningAlert.showAndWait();
         } else {
-          boolean isValidUser = DBconnection.validateUser(username, password);
-          if (isValidUser) {
+          int userId = DBconnection.validateUser(username, password);
+          if (userId != -1) {
             Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
             successAlert.setTitle("로그인 성공");
             successAlert.setContentText("로그인에 성공했습니다.");
             successAlert.showAndWait();
-            showMainWindow(currentStage);
+            showMainWindow(currentStage, userId); // 사용자 ID 전달
           } else {
             Alert errorAlert = new Alert(Alert.AlertType.ERROR);
             errorAlert.setTitle("로그인 실패");
@@ -91,6 +90,7 @@ public class MainApp extends Application {
           }
         }
       });
+
 
       // 회원가입 화면으로 이동
       Button gotoSign = (Button) loginRoot.lookup("#gotoSign");
@@ -104,7 +104,7 @@ public class MainApp extends Application {
     } catch (Exception e) {
       e.printStackTrace();  // 예외 처리
     }
-  }
+  } // showLogin
 
   // 회원가입 창 전환
   private void showSignWindow(Stage currentStage) {
@@ -163,10 +163,10 @@ public class MainApp extends Application {
     } catch (Exception e) {
       e.printStackTrace();  // 예외 처리
     }
-  }
+  } // showSign
 
   // 메인 화면으로 전환
-  private void showMainWindow(Stage currentStage) {
+  private void showMainWindow(Stage currentStage, int userId) {
     try {
       FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"));
       Parent mainRoot = loader.load();
@@ -177,7 +177,7 @@ public class MainApp extends Application {
 
       gotoPlanPlus.setOnAction(event -> {
         try {
-          showPlanWindow(currentStage);
+          showPlanWindow(currentStage, userId); // 사용자 ID 전달
         } catch (Exception e) {
           e.printStackTrace();
         }
@@ -185,17 +185,17 @@ public class MainApp extends Application {
 
       gotoAllPlan.setOnAction(event -> {
         try {
-          showAllPlanWindow(currentStage);
+          showAllPlanWindow(currentStage, userId); // 사용자 ID 전달
         } catch (Exception e) {
           e.printStackTrace();
         }
       });
     } catch (Exception e) {
-      e.printStackTrace();  // 예외 처리
+      e.printStackTrace(); // 예외 처리
     }
-  }
+  } // showMain
 
-  private void showPlanWindow(Stage currentStage) {
+  private void showPlanWindow(Stage currentStage, int userId) {
     try {
       FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/planplus.fxml"));
       Parent planRoot = loader.load();
@@ -204,13 +204,12 @@ public class MainApp extends Application {
       Button back = (Button) planRoot.lookup("#Back");
       back.setOnAction(event -> {
         try {
-          showMainWindow(currentStage);
+          showMainWindow(currentStage, userId); // 사용자 ID 전달
         } catch (Exception e) {
           e.printStackTrace();
         }
       });
 
-      // 데이터 입력 후 enter 버튼 처리
       Button enterButton = (Button) planRoot.lookup("#enterButton");
       enterButton.setOnAction(event -> {
         TextField titleField = (TextField) planRoot.lookup("#titleField");
@@ -221,57 +220,50 @@ public class MainApp extends Application {
         String content = contentArea.getText().trim();
         String date = dateField.getText().trim();
 
-        // 데이터 유효성 검사
         if (title.isEmpty() || content.isEmpty() || date.isEmpty()) {
           Alert alert = new Alert(Alert.AlertType.WARNING);
           alert.setTitle("경고");
           alert.setContentText("모든 필드를 입력하세요.");
           alert.showAndWait();
         } else {
-          // 계획 추가
-          plans.add("제목 : " + title + "\n내용 : " + content + "\n날짜 : " + date);
-          showAllPlanWindow(currentStage);  // 계획 추가 후 allplan 화면으로 이동
+          boolean success = DBconnection.insertPlan(userId, title, content, date);
+          if (success) {
+            Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+            successAlert.setTitle("성공");
+            successAlert.setContentText("계획이 저장되었습니다.");
+            successAlert.showAndWait();
+            showAllPlanWindow(currentStage, userId); // 계획 목록으로 이동
+          } else {
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setTitle("오류");
+            errorAlert.setContentText("계획 저장에 실패했습니다.");
+            errorAlert.showAndWait();
+          }
         }
       });
     } catch (Exception e) {
-      e.printStackTrace();  // 예외 처리
+      e.printStackTrace();
     }
   }
+  // showPlan
 
 
-  private void showAllPlanWindow(Stage currentStage) {
+  private void showAllPlanWindow(Stage currentStage, int userId) {
     try {
       FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/allplan.fxml"));
       Parent allPlanRoot = loader.load();
       currentStage.setScene(new Scene(allPlanRoot, 800, 600));
 
       ListView<String> planListView = (ListView<String>) allPlanRoot.lookup("#planListView");
-      Button plusButton = (Button) allPlanRoot.lookup("#plusButton");  // plusButton 가져오기
+      Button plusButton = (Button) allPlanRoot.lookup("#plusButton");
 
-      // ListView에 계획 데이터 표시
+      List<String> plans = DBconnection.getPlansByUserId(userId); // 사용자 계획 조회
       planListView.getItems().clear();
       planListView.getItems().addAll(plans);
 
-      // ListView 아이템의 폰트 설정
-      planListView.setCellFactory(param -> {
-        return new javafx.scene.control.ListCell<String>() {
-          @Override
-          protected void updateItem(String item, boolean empty) {
-            super.updateItem(item, empty);
-            if (item != null) {
-              setText(item);
-              setFont(Font.font("Jalnan 2 TTF", 14)); // 폰트 및 크기 설정
-            } else {
-              setText(null);
-            }
-          }
-        };
-      });
-
-      // plusButton 클릭 시 planplus 화면으로 이동
       plusButton.setOnAction(event -> {
         try {
-          showPlanWindow(currentStage);  // planplus 화면으로 이동
+          showPlanWindow(currentStage, userId); // 계획 추가 화면으로 이동
         } catch (Exception e) {
           e.printStackTrace();
         }
@@ -280,19 +272,19 @@ public class MainApp extends Application {
       Button back = (Button) allPlanRoot.lookup("#Back");
       back.setOnAction(event -> {
         try {
-          showMainWindow(currentStage);
+          showMainWindow(currentStage, userId); // 메인 화면으로 이동
         } catch (Exception e) {
           e.printStackTrace();
         }
       });
     } catch (Exception e) {
-      e.printStackTrace();  // 예외 처리
+      e.printStackTrace();
     }
-  }
+  } // showAllPlan
 
 
 
   public static void main(String[] args) {
     launch(args);
-  }
-}
+  } // main
+} // Application
