@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #ebeaeb;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+  <children>
+    <Button fx:id="backButton" layoutX="14.0" layoutY="554.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text=" ← Back" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="5.0">
+      <font>
+        <Font name="Jalnan 2 TTF" size="26.0" />
+      </font>
+      <padding>
+        <Insets left="1.0" />
+      </padding>
+    </Button>
+    <Text layoutX="27.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="계정관리">
+      <font>
+        <Font name="Jalnan 2 TTF" size="40.0" />
+      </font>
+    </Text>
+    <Text layoutX="53.0" layoutY="186.0" strokeType="OUTSIDE" strokeWidth="0.0" text="아이디 변경">
+      <font>
+        <Font name="Jalnan 2 TTF" size="25.0" />
+      </font>
+    </Text>
+    <Text layoutX="53.0" layoutY="325.0" strokeType="OUTSIDE" strokeWidth="0.0" text="비밀번호 변경 ">
+      <font>
+        <Font name="Jalnan 2 TTF" size="25.0" />
+      </font>
+    </Text>
+    <TextField layoutX="55.0" layoutY="206.0" prefHeight="50.0" prefWidth="690.0" promptText="입력" style="-fx-background-radius: 15;">
+      <font>
+        <Font name="Jalnan 2 TTF" size="25.0" />
+      </font>
+    </TextField>
+    <TextField layoutX="55.0" layoutY="342.0" prefHeight="50.0" prefWidth="690.0" promptText="입력" style="-fx-background-radius: 15;">
+      <font>
+        <Font name="Jalnan 2 TTF" size="25.0" />
+      </font>
+    </TextField>
+    <Button layoutX="639.0" layoutY="437.0" minHeight="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="106.0" style="-fx-background-radius: 20; -fx-background-color: #000;" text="enter" textAlignment="CENTER" textFill="WHITE">
+      <font>
+        <Font name="Pacifico Regular" size="25.0" />
+      </font>
+      <padding>
+        <Insets bottom="5.0" />
+      </padding>
+    </Button>
+    <Button layoutX="610.0" layoutY="562.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="로그아웃" AnchorPane.bottomAnchor="10.0">
+      <font>
+        <Font name="Jalnan 2 TTF" size="20.0" />
+      </font>
+      <padding>
+        <Insets left="1.0" />
+      </padding>
+    </Button>
+    <Button layoutX="704.0" layoutY="562.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="회원탈퇴" AnchorPane.bottomAnchor="10.0">
+      <font>
+        <Font name="Jalnan 2 TTF" size="20.0" />
+      </font>
+      <padding>
+        <Insets left="1.0" />
+      </padding>
+    </Button>
+  </children>
+</AnchorPane>

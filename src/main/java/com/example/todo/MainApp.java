@@ -174,6 +174,16 @@ public class MainApp extends Application {
 
       Button gotoPlanPlus = (Button) mainRoot.lookup("#gotoPlanPlus");
       Button gotoAllPlan = (Button) mainRoot.lookup("#gotoAllPlan");
+      Button gotoManager = (Button) mainRoot.lookup("#gotoManager");
+
+      // 계정관리 화면으로 전환
+      gotoManager.setOnAction(event -> {
+        try {
+          showManagerWindow(currentStage, userId); // 사용자 ID 전달
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+      });
 
       gotoPlanPlus.setOnAction(event -> {
         try {
@@ -194,6 +204,31 @@ public class MainApp extends Application {
       e.printStackTrace(); // 예외 처리
     }
   } // showMain
+
+  // 계정관리 창 전환
+  private void showManagerWindow(Stage currentStage, int userId) {
+    try {
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/manager.fxml"));
+      Parent managerRoot = loader.load();
+      currentStage.setScene(new Scene(managerRoot, 800, 600));
+
+      // 뒤로 가기 버튼 처리
+      Button backButton = (Button) managerRoot.lookup("#backButton");
+      backButton.setOnAction(event -> {
+        try {
+          showMainWindow(currentStage, userId); // 메인 화면으로 이동
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+      });
+
+      // 계정관리에서 사용자 정보 변경을 처리하려면 필요한 코드 추가
+      // 예: 아이디 변경, 비밀번호 변경 버튼 클릭 이벤트 등
+    } catch (Exception e) {
+      e.printStackTrace();  // 예외 처리
+    }
+  } // showManagerWindow
+
 
   private void showPlanWindow(Stage currentStage, int userId) {
     try {
