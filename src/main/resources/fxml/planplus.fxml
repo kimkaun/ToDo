@@ -25,7 +25,7 @@
         <Font name="Jalnan 2 TTF" size="29.0" />
       </font>
     </TextArea>
-    <TextField fx:id="dateField" layoutX="75.0" layoutY="484.0" prefHeight="44.0" prefWidth="234.0" promptText="날짜 0000/00/00 ">
+    <TextField fx:id="dateField" layoutX="75.0" layoutY="484.0" prefHeight="44.0" prefWidth="234.0" promptText="날짜 (8자리) ">
       <font>
         <Font name="Jalnan 2 TTF" size="23.0" />
       </font>
