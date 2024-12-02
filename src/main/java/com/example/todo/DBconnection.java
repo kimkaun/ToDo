@@ -128,6 +128,22 @@ public class DBconnection {
     }
     return -1; // 로그인 실패 시 -1 반환
   }
+  // 중복 아이디 체크 메서드
+  public static boolean isUsernameTaken(String username) {
+    String query = "SELECT COUNT(*) FROM users WHERE username = ?";
+    try (Connection conn = getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(query)) {
+      pstmt.setString(1, username);
+      ResultSet rs = pstmt.executeQuery();
+      if (rs.next()) {
+        return rs.getInt(1) > 0; // 아이디가 존재하면 true 반환
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return false; // 예외 발생 시 false 반환
+  }
+
 
 
 } // DBconnetion class

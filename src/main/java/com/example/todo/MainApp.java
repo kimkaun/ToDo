@@ -134,6 +134,11 @@ public class MainApp extends Application {
           alert.setTitle("경고");
           alert.setContentText("비밀번호가 일치하지 않습니다.");
           alert.showAndWait();
+        } else if (DBconnection.isUsernameTaken(username)) { // 중복 아이디 체크
+          Alert alert = new Alert(Alert.AlertType.WARNING);
+          alert.setTitle("경고");
+          alert.setContentText("이미 사용 중인 아이디입니다. 다른 아이디를 입력하세요");
+          alert.showAndWait();
         } else {
           boolean success = DBconnection.insertUser(username, password);
           if (success) {
@@ -163,7 +168,7 @@ public class MainApp extends Application {
     } catch (Exception e) {
       e.printStackTrace();  // 예외 처리
     }
-  } // showSign
+  }
 
   // 메인 화면으로 전환
   private void showMainWindow(Stage currentStage, int userId) {
