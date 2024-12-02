@@ -50,7 +50,7 @@
         <Insets bottom="5.0" />
       </padding>
     </Button>
-    <Button layoutX="610.0" layoutY="562.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="로그아웃" AnchorPane.bottomAnchor="10.0">
+    <Button fx:id="logoutButton" layoutX="610.0" layoutY="562.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="로그아웃" AnchorPane.bottomAnchor="10.0">
       <font>
         <Font name="Jalnan 2 TTF" size="20.0" />
       </font>
@@ -58,7 +58,7 @@
         <Insets left="1.0" />
       </padding>
     </Button>
-    <Button layoutX="704.0" layoutY="562.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="회원탈퇴" AnchorPane.bottomAnchor="10.0">
+    <Button fx:id="deleteAccountButton" layoutX="704.0" layoutY="562.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="회원탈퇴" AnchorPane.bottomAnchor="10.0">
       <font>
         <Font name="Jalnan 2 TTF" size="20.0" />
       </font>

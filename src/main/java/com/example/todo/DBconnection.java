@@ -88,7 +88,7 @@ public class DBconnection {
         String title = rs.getString("title");
         String content = rs.getString("content");
         String date = rs.getString("date");
-        plans.add("제목: " + title + "\n내용: " + content + "\n날짜: " + date);
+        plans.add("제목 : " + title + "\n내용 : " + content + "\n날짜 : " + date);
       }
     } catch (SQLException e) {
       System.out.println("계획 조회 중 오류 발생: " + e.getMessage());
@@ -143,7 +143,67 @@ public class DBconnection {
     }
     return false; // 예외 발생 시 false 반환
   }
+  // 비밀번호 확인 메서드
+  public static boolean checkPassword(int userId, String password) {
+    String query = "SELECT * FROM users WHERE user_id = ? AND password = ?";
+    try (Connection conn = getConnection();
+         PreparedStatement stmt = conn.prepareStatement(query)) {
+      stmt.setInt(1, userId);
+      stmt.setString(2, password);
 
+      try (ResultSet rs = stmt.executeQuery()) {
+        return rs.next(); // 결과가 있으면 비밀번호 일치
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return false; // 쿼리가 실패하거나 결과가 없으면 false
+  }
+
+  // 회원탈되 메서드
+  public static boolean deleteUser(int userId) {
+    String deletePlansQuery = "DELETE FROM plans WHERE user_id = ?";
+    String deleteUserQuery = "DELETE FROM users WHERE user_id = ?";
+    Connection conn = null; // conn 변수를 메서드 범위 내에서 선언
+
+    try {
+      conn = getConnection(); // DB 연결 생성
+      conn.setAutoCommit(false); // 트랜잭션 시작
+
+      // plans 테이블 데이터 삭제
+      try (PreparedStatement deletePlansStmt = conn.prepareStatement(deletePlansQuery)) {
+        deletePlansStmt.setInt(1, userId);
+        deletePlansStmt.executeUpdate();
+      }
+
+      // users 테이블 데이터 삭제
+      try (PreparedStatement deleteUserStmt = conn.prepareStatement(deleteUserQuery)) {
+        deleteUserStmt.setInt(1, userId);
+        deleteUserStmt.executeUpdate();
+      }
+
+      conn.commit(); // 트랜잭션 커밋
+      return true;
+    } catch (SQLException e) {
+      e.printStackTrace();
+      if (conn != null) { // conn이 null이 아닐 때만 롤백 시도
+        try {
+          conn.rollback();
+        } catch (SQLException rollbackEx) {
+          rollbackEx.printStackTrace();
+        }
+      }
+    } finally {
+      if (conn != null) { // conn이 null이 아닐 때만 닫기
+        try {
+          conn.close();
+        } catch (SQLException closeEx) {
+          closeEx.printStackTrace();
+        }
+      }
+    }
+    return false; // 실패 시 false 반환
+  }
 
 
 } // DBconnetion class

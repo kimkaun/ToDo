@@ -4,15 +4,12 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class MainApp extends Application {
 
@@ -210,7 +207,6 @@ public class MainApp extends Application {
     }
   } // showMain
 
-  // 계정관리 창 전환
   private void showManagerWindow(Stage currentStage, int userId) {
     try {
       FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/manager.fxml"));
@@ -227,13 +223,73 @@ public class MainApp extends Application {
         }
       });
 
-      // 계정관리에서 사용자 정보 변경을 처리하려면 필요한 코드 추가
-      // 예: 아이디 변경, 비밀번호 변경 버튼 클릭 이벤트 등
-    } catch (Exception e) {
-      e.printStackTrace();  // 예외 처리
-    }
-  } // showManagerWindow
+      // 로그아웃 버튼 처리
+      Button logoutButton = (Button) managerRoot.lookup("#logoutButton");
+      logoutButton.setOnAction(event -> {
+        // 확인 다이얼로그 표시
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmationAlert.setTitle("로그아웃");
+        confirmationAlert.setHeaderText(null);
+        confirmationAlert.setContentText("로그아웃 하시겠습니까?");
 
+        // 사용자의 선택 처리
+        Optional<ButtonType> result = confirmationAlert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+          try {
+            showLoginWindow(currentStage); // 로그인 화면으로 이동
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+        }
+      });
+      // 회원탈퇴 버튼 처리
+      Button deleteAccountButton = (Button) managerRoot.lookup("#deleteAccountButton");
+      deleteAccountButton.setOnAction(event -> {
+        // 비밀번호 입력창 생성
+        Dialog<String> passwordDialog = new Dialog<>();
+        passwordDialog.setTitle("회원탈퇴");
+        passwordDialog.setHeaderText("비밀번호를 입력해주세요.");
+
+        // 비밀번호 입력 필드 추가
+        PasswordField passwordField = new PasswordField();
+        passwordField.setPromptText("비밀번호 입력");
+
+        // Dialog에 입력창 추가
+        passwordDialog.getDialogPane().setContent(passwordField);
+        passwordDialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+
+        // OK 버튼 클릭 시 입력값 가져오기
+        passwordDialog.setResultConverter(dialogButton -> {
+          if (dialogButton == ButtonType.OK) {
+            return passwordField.getText();
+          }
+          return null;
+        });
+
+        Optional<String> result = passwordDialog.showAndWait();
+        result.ifPresent(password -> {
+          // 비밀번호 확인 및 탈퇴 처리
+          if (DBconnection.checkPassword(userId, password)) { // DBconnection에서 비밀번호 확인 메서드 필요
+            boolean success = DBconnection.deleteUser(userId); // 사용자 삭제 메서드 호출
+            if (success) {
+              Alert alert = new Alert(Alert.AlertType.INFORMATION);
+              alert.setTitle("회원탈퇴 성공");
+              alert.setContentText("회원탈퇴가 완료되었습니다.");
+              alert.showAndWait();
+              showLoginWindow(currentStage); // 로그인 화면으로 이동
+            }
+          } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("오류");
+            alert.setContentText("비밀번호가 올바르지 않습니다.");
+            alert.showAndWait();
+          }
+        });
+      });
+    } catch (Exception e) {
+      e.printStackTrace(); // 예외 처리
+    }
+  } // showmanager
 
   private void showPlanWindow(Stage currentStage, int userId) {
     try {
@@ -284,8 +340,7 @@ public class MainApp extends Application {
     } catch (Exception e) {
       e.printStackTrace();
     }
-  }
-  // showPlan
+  } // showPlan
 
 
   private void showAllPlanWindow(Stage currentStage, int userId) {
