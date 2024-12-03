@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import javafx.scene.paint.Color; // javaFX 색상 클래스
 
 public class MainApp extends Application {
 
@@ -268,6 +269,14 @@ public class MainApp extends Application {
         HBox hbox = new HBox(10);             // HBox 생성, 간격
         CheckBox checkBox = new CheckBox(plan);  // 체크박스를 생성하고
         checkBox.setFont(Font.font("Jalnan 2 TTF", 14));    // 체크박스 폰트 설정
+        // 체크박스 상태 변경 이벤트
+        checkBox.setOnAction(event -> {
+          if (checkBox.isSelected()) {  // 체크된 상태에서 텍스트 색상을 파란색으로 설정
+            checkBox.setTextFill(Color.BLUE);
+          } else {  // 체크 해제된 상태에서 텍스트 색상을 기본 검정으로 설정
+            checkBox.setTextFill(Color.BLACK);
+          }
+        });
         hbox.getChildren().add(checkBox);         // 체크박스를 HBox에 추가
         hbox.setAlignment(Pos.CENTER_LEFT);       // HBox 안의 요소들을 왼쪽 정렬
         planListView.getItems().add(hbox);        // ListView에 추가
