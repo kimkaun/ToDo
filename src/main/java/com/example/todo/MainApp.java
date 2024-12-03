@@ -257,10 +257,11 @@ public class MainApp extends Application {
     try {
       FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/allplan.fxml"));   // 모든계획 화면 fxml 로드
       Parent allPlanRoot = loader.load();   // 모든계획 화면 fxml 파일 로드
-      currentStage.setScene(new Scene(allPlanRoot, 800, 600));    // 현재 stage에 새로운 scnen설정
+      currentStage.setScene(new Scene(allPlanRoot, 800, 600));    // 현재 stage에 새로운 scene 설정
       // 화면 요소 초기화
       ListView<HBox> planListView = (ListView<HBox>) allPlanRoot.lookup("#planListView");   // 계획 ListView를 ID로 찾기
       Button plusButton = (Button) allPlanRoot.lookup("#plusButton");   // 추가 버튼을 ID로 찾기
+      Button planDeleteButton = (Button) allPlanRoot.lookup("#planDelete");  // 삭제 버튼
       // plans 테이블에서 사용자 계획 리스트를 가져와 ListView에 추가
       List<String> plans = DBconnection.getPlansByUserId(userId); // user_id로 계획 조회
       planListView.getItems().clear();    // 기존 항목 초기화
@@ -281,6 +282,24 @@ public class MainApp extends Application {
         hbox.setAlignment(Pos.CENTER_LEFT);       // HBox 안의 요소들을 왼쪽 정렬
         planListView.getItems().add(hbox);        // ListView에 추가
       }
+      // 삭제 버튼 클릭 이벤트 처리
+      planDeleteButton.setOnAction(event -> {
+        // 삭제할 항목들을 찾기 위한 리스트
+        List<HBox> itemsToRemove = new ArrayList<>();
+        // ListView에서 각 HBox에 대해 체크박스를 확인하고, 체크된 항목을 삭제
+        for (HBox hbox : planListView.getItems()) {
+          CheckBox checkBox = (CheckBox) hbox.getChildren().get(0);  // 첫 번째 자식 (체크박스) 가져오기
+          if (checkBox.isSelected()) {
+            String planTitle = checkBox.getText();  // 체크박스의 텍스트 (계획 제목)
+            // DB에서 계획 삭제
+            DBconnection.deletePlan(planTitle, userId);
+            // 삭제할 항목을 리스트에 추가
+            itemsToRemove.add(hbox);
+          }
+        }
+        // ListView에서 체크된 항목 제거
+        planListView.getItems().removeAll(itemsToRemove);
+      });
       // ListView의 셀 팩토리 설정 (각 셀에 대해 HBox를 렌더링)
       planListView.setCellFactory(param -> {
         return new javafx.scene.control.ListCell<HBox>() {

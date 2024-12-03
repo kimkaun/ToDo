@@ -176,4 +176,26 @@ public class DBconnection {
     }
     return false; // 실패 시 false 반환
   } // deleteUser
+  // 계획 선택 삭제 메서드
+  public static boolean deletePlan(String planTitle, int userId) {
+    String query = "DELETE FROM plans WHERE title = ? AND user_id = ?";  // 제목과 사용자 ID로 계획을 삭제하는 SQL 쿼리
+    try (Connection conn = getConnection();  // 데이터베이스 연결
+         PreparedStatement pstmt = conn.prepareStatement(query)) {  // SQL 쿼리 준비
+      // '제목 :' 부분을 제거하고, 실제 제목만 추출
+      String cleanTitle = planTitle.replaceAll("제목 : ", "").split("\n")[0].trim();  // "제목 : "을 제거하고 첫 번째 줄만 사용
+      System.out.println("삭제 중인 계획 제목: '" + cleanTitle + "' 및 사용자 ID: " + userId);
+      pstmt.setString(1, cleanTitle);  // 제목을 쿼리의 첫 번째 파라미터로 설정
+      pstmt.setInt(2, userId);         // 사용자 ID를 쿼리의 두 번째 파라미터로 설정
+      int result = pstmt.executeUpdate();  // 삭제 쿼리 실행
+      if (result > 0) {  // 삭제된 행 수가 1 이상이면 삭제 성공
+        System.out.println(result + "개의 계획이 삭제되었습니다.");
+        return true;  // 삭제 성공 시 true 반환
+      } else {
+        System.out.println("삭제할 계획을 찾을 수 없습니다.");
+      }
+    } catch (SQLException e) {
+      System.out.println("계획 삭제 중 오류 발생: " + e.getMessage());  // 오류 발생 시 오류 메시지 출력
+    }
+    return false;  // 삭제 실패 시 false 반환
+  } // deletePlan
 } // DBconnetion class
