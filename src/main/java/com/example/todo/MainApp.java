@@ -2,9 +2,11 @@ package com.example.todo;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import java.util.ArrayList;
@@ -256,23 +258,30 @@ public class MainApp extends Application {
       Parent allPlanRoot = loader.load();   // 모든계획 화면 fxml 파일 로드
       currentStage.setScene(new Scene(allPlanRoot, 800, 600));    // 현재 stage에 새로운 scnen설정
       // 화면 요소 초기화
-      ListView<String> planListView = (ListView<String>) allPlanRoot.lookup("#planListView");   // 계획 ListView를 ID로 찾기
+      ListView<HBox> planListView = (ListView<HBox>) allPlanRoot.lookup("#planListView");   // 계획 ListView를 ID로 찾기
       Button plusButton = (Button) allPlanRoot.lookup("#plusButton");   // 추가 버튼을 ID로 찾기
       // plans 테이블에서 사용자 계획 리스트를 가져와 ListView에 추가
       List<String> plans = DBconnection.getPlansByUserId(userId); // user_id로 계획 조회
       planListView.getItems().clear();    // 기존 항목 초기화
-      planListView.getItems().addAll(plans);    // 조회된 계획 추가
-      // ListView의 폰트 설정
+      // 각 계획에 대해 체크박스 추가
+      for (String plan : plans) {
+        HBox hbox = new HBox(10);             // HBox 생성, 간격
+        CheckBox checkBox = new CheckBox(plan);  // 체크박스를 생성하고
+        checkBox.setFont(Font.font("Jalnan 2 TTF", 14));    // 체크박스 폰트 설정
+        hbox.getChildren().add(checkBox);         // 체크박스를 HBox에 추가
+        hbox.setAlignment(Pos.CENTER_LEFT);       // HBox 안의 요소들을 왼쪽 정렬
+        planListView.getItems().add(hbox);        // ListView에 추가
+      }
+      // ListView의 셀 팩토리 설정 (각 셀에 대해 HBox를 렌더링)
       planListView.setCellFactory(param -> {
-        return new javafx.scene.control.ListCell<String>() {
+        return new javafx.scene.control.ListCell<HBox>() {
           @Override
-          protected void updateItem(String item, boolean empty) {
+          protected void updateItem(HBox item, boolean empty) {
             super.updateItem(item, empty);
             if (item != null) {
-              setText(item);
-              setFont(Font.font("Jalnan 2 TTF", 14)); // 폰트 및 크기 설정
+              setGraphic(item); // HBox를 셀에 추가
             } else {
-              setText(null);    // 항목이 비어있을 경우 텍스트 제거
+              setGraphic(null); // 항목이 비어있을 경우
             }
           }
         };
