@@ -67,14 +67,14 @@ public class DBconnection {
   } // insertPlan
   // 사용자별 계획 조회 메서드
   public static List<String> getPlansByUserId(int userId) {
-    String query = "SELECT title, content, date FROM plans WHERE user_id = ?";    // 사용자 ID에 해당하는 계획을 조회하는 SQL 쿼리
+    String query = "SELECT title, content, date FROM plans WHERE user_id = ? ORDER BY date ASC";    // 사용자 ID에 해당하는 계획을 조회하는 SQL 쿼리 (가장 오래된 날짜부터)
     List<String> plans = new ArrayList<>();   // 계획을 저장할 리스트 생성
     // 데이터베이스 연결 및 쿼리 실행을 위한 try-with-resources 구문
     try (Connection conn = getConnection();
          PreparedStatement pstmt = conn.prepareStatement(query)) {
       // 사용자 ID를 쿼리의 자리 표시자에 바인딩
       pstmt.setInt(1, userId);
-      // 쿼리 실행 후 결과셋을 반환
+      // 쿼리 실행 후 결과셋을 반환3
       ResultSet rs = pstmt.executeQuery();
       // 결과셋에서 데이터를 읽어와 plans 리스트에 추가
       while (rs.next()) {
