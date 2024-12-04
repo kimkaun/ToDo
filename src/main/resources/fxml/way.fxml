@@ -16,7 +16,7 @@
         <Insets left="1.0" />
       </padding>
     </Button>
-    <Text layoutX="27.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="계정관리">
+    <Text layoutX="27.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="사용방법">
       <font>
         <Font name="Jalnan 2 TTF" size="40.0" />
       </font>
@@ -37,5 +37,25 @@
         <Insets left="1.0" />
       </padding>
     </Button>
+    <Text layoutX="67.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1. 계획추가를 한다.    " wrappingWidth="441.77626037597656">
+      <font>
+        <Font name="Jalnan 2 TTF" size="30.0" />
+      </font>
+    </Text>
+    <Text layoutX="67.0" layoutY="212.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(이때 제목이 겹치지 않게할것) " wrappingWidth="545.1096343994141">
+      <font>
+        <Font size="25.0" />
+      </font>
+    </Text>
+    <Text layoutX="67.0" layoutY="300.0" lineSpacing="2.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2. 계획을 추가하고 모든계획에 가서 체크박스를 체크한 상태로 delete버튼을 누르면 삭제된다." wrappingWidth="659.1096343994141">
+      <font>
+        <Font name="Jalnan 2 TTF" size="30.0" />
+      </font>
+    </Text>
+    <Text layoutX="67.0" layoutY="390.0" lineSpacing="2.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(제목이 겹치면 하나만 체크해도 제목이 같은게 다 삭제되니까 꼭 제목은 다르게 할것!) " wrappingWidth="689.1096343994141">
+      <font>
+        <Font size="25.0" />
+      </font>
+    </Text>
   </children>
 </AnchorPane>

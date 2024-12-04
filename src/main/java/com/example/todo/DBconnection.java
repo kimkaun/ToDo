@@ -183,7 +183,7 @@ public class DBconnection {
          PreparedStatement pstmt = conn.prepareStatement(query)) {  // SQL 쿼리 준비
       // '제목 :' 부분을 제거하고, 실제 제목만 추출
       String cleanTitle = planTitle.replaceAll("제목 : ", "").split("\n")[0].trim();  // "제목 : "을 제거하고 첫 번째 줄만 사용
-      System.out.println("삭제 중인 계획 제목: '" + cleanTitle + "' 및 사용자 ID: " + userId);
+      System.out.println("삭제 계획 제목: '" + cleanTitle + "' 및 user_id : " + userId);
       pstmt.setString(1, cleanTitle);  // 제목을 쿼리의 첫 번째 파라미터로 설정
       pstmt.setInt(2, userId);         // 사용자 ID를 쿼리의 두 번째 파라미터로 설정
       int result = pstmt.executeUpdate();  // 삭제 쿼리 실행

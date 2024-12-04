@@ -171,7 +171,7 @@ public class MainApp extends Application {
       // 메인화면 버튼 가져오기
       Button gotoPlanPlus = (Button) mainRoot.lookup("#gotoPlanPlus");    // 계획 추가
       Button gotoAllPlan = (Button) mainRoot.lookup("#gotoAllPlan");      // 모든 일정 보기 & 관리
-      Button gotoManager = (Button) mainRoot.lookup("#gotoManager");      // 계정 관리
+      Button gotoway = (Button) mainRoot.lookup("#gotoway");      // 사용방법
       // 계획 추가 화면으로 전환
       gotoPlanPlus.setOnAction(event -> {
         try {
@@ -188,10 +188,10 @@ public class MainApp extends Application {
           e.printStackTrace();
         }
       });
-      // 계정관리 화면으로 전환
-      gotoManager.setOnAction(event -> {
+      // 사용방법 화면으로 전환
+      gotoway.setOnAction(event -> {
         try {
-          showManagerWindow(currentStage, userId); // 사용자 ID 전달하며 계정 관리 화면으로 전환
+          showwayWindow(currentStage, userId); // 사용자 ID 전달하며 사용방법 화면으로 전환
         } catch (Exception e) {
           e.printStackTrace();
         }
@@ -335,14 +335,14 @@ public class MainApp extends Application {
       e.printStackTrace();
     }
   } // showAllPlan
-  // 계정 관리 화면으로 전환
-  private void showManagerWindow(Stage currentStage, int userId) {
+  // 사용 방법 화면으로 전환
+  private void showwayWindow(Stage currentStage, int userId) {
     try {
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/manager.fxml"));   // 계정 관리 화면에서 fxml로드
-      Parent managerRoot = loader.load();
-      currentStage.setScene(new Scene(managerRoot, 800, 600));
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/way.fxml"));   // 사용방법 화면에서 fxml로드
+      Parent wayRoot = loader.load();
+      currentStage.setScene(new Scene(wayRoot, 800, 600));
       // 뒤로 가기 버튼 처리
-      Button backButton = (Button) managerRoot.lookup("#backButton");
+      Button backButton = (Button) wayRoot.lookup("#backButton");
       backButton.setOnAction(event -> {
         try {
           showMainWindow(currentStage, userId); // 메인 화면으로 이동
@@ -351,7 +351,7 @@ public class MainApp extends Application {
         }
       });
       // 로그아웃 버튼 처리
-      Button logoutButton = (Button) managerRoot.lookup("#logoutButton");
+      Button logoutButton = (Button) wayRoot.lookup("#logoutButton");
       logoutButton.setOnAction(event -> {
         // 로그아웃 확인 표시
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -369,7 +369,7 @@ public class MainApp extends Application {
         }
       });
       // 회원탈퇴 버튼 처리
-      Button deleteAccountButton = (Button) managerRoot.lookup("#deleteAccountButton");   // 회원탈퇴 버튼을 ID로 찾기
+      Button deleteAccountButton = (Button) wayRoot.lookup("#deleteAccountButton");   // 회원탈퇴 버튼을 ID로 찾기
       deleteAccountButton.setOnAction(event -> {
         // 비밀번호 입력창 생성
         Dialog<String> passwordDialog = new Dialog<>();
@@ -411,7 +411,7 @@ public class MainApp extends Application {
     } catch (Exception e) {
       e.printStackTrace(); // 예외 처리
     }
-  } // showmanager
+  } // showway
 
   public static void main(String[] args) {
     launch(args);
