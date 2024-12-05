@@ -1,11 +1,14 @@
 package com.example.todo;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -13,6 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javafx.scene.paint.Color; // javaFX 색상 클래스
+import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
+import javafx.util.Duration;
 
 public class MainApp extends Application {
 
@@ -172,6 +179,9 @@ public class MainApp extends Application {
       Button gotoPlanPlus = (Button) mainRoot.lookup("#gotoPlanPlus");    // 계획 추가
       Button gotoAllPlan = (Button) mainRoot.lookup("#gotoAllPlan");      // 모든 일정 보기 & 관리
       Button gotoway = (Button) mainRoot.lookup("#gotoway");      // 사용방법
+      // ImageView 이벤트 핸들러 설정
+      ImageView imageView = (ImageView) mainRoot.lookup("#imageView");
+      imageView.setOnMouseClicked(this::handleImageClick); // 이미지 클릭 시 핸들러 호출
       // 계획 추가 화면으로 전환
       gotoPlanPlus.setOnAction(event -> {
         try {
@@ -200,6 +210,43 @@ public class MainApp extends Application {
       e.printStackTrace(); // 예외 처리
     }
   } // showMain
+  // 이미지 클릭 시 호출되는 메서드
+  public void handleImageClick(MouseEvent event) {
+    // 무작위 위치 계산
+    double randomX = Math.random() * 600; // 0~600 범위 내 랜덤 X 좌표
+    double randomY = Math.random() * 400; // 0~400 범위 내 랜덤 Y 좌표
+
+    // 랜덤으로 선택할 이미지 파일 경로 배열
+    String[] imagePaths = {
+        "file:C:/work/java_projects/img/b1.png",   // 첫 번째 이미지
+        "file:C:/work/java_projects/img/b2.png",   // 두 번째 이미지
+        "file:C:/work/java_projects/img/b3.png"    // 세 번째 이미지
+    };
+
+    // 0, 1, 2 중 랜덤 인덱스 선택
+    int randomIndex = (int) (Math.random() * imagePaths.length);
+
+    // 랜덤 이미지 선택
+    Image randomImage = new Image(imagePaths[randomIndex]);
+
+    // 새로운 이미지뷰 생성
+    ImageView newImage = new ImageView(randomImage);
+    newImage.setFitHeight(120);
+    newImage.setFitWidth(120);
+    newImage.setLayoutX(randomX);
+    newImage.setLayoutY(randomY);
+
+    // FXML에서 루트 AnchorPane을 찾는 방식으로 수정
+    AnchorPane root = (AnchorPane) ((ImageView) event.getSource()).getParent(); // ImageView의 부모인 AnchorPane을 찾음
+    root.getChildren().add(newImage); // 랜덤 위치에 이미지 추가
+
+    // 1초 후에 이미지를 제거하는 Timeline 생성
+    Timeline timeline = new Timeline(
+        new KeyFrame(Duration.seconds(1), e -> root.getChildren().remove(newImage))
+    );
+    timeline.setCycleCount(1); // 1번만 실행
+    timeline.play(); // 타임라인 실행
+  } // handleImageClick
   // 계획 추가 화면으로 전환
   private void showPlanWindow(Stage currentStage, int userId) {
     try {

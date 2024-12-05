@@ -9,7 +9,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #ebeaeb;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
   <children>
-    <ImageView fitHeight="130.0" fitWidth="130.0" layoutX="680.0" layoutY="480.0" pickOnBounds="true" preserveRatio="true">
+    <ImageView fx:id="imageView" fitHeight="130.0" fitWidth="130.0" layoutX="680.0" layoutY="480.0" pickOnBounds="true" preserveRatio="true">
       <image>
         <Image url="file:C:/work/java_projects/img/catfoot.png" />
       </image>
